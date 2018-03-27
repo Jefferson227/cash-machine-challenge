@@ -1,0 +1,1 @@
+const cashMachineTest = require('./components/cash-machine/cash-machine.test');
