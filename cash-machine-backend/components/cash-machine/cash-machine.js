@@ -4,15 +4,15 @@ const getNotes = (amountInput, notesAvailable, highestNoteIndex, notesWithdrew) 
     }
 
     if (typeof amountInput !== 'number' || isNaN(amountInput)) {
-        throwInvalidArgumentError();
+        return 'InvalidArgumentException';
     }
 
     if (amountInput < 1) {
-        throwInvalidArgumentError();
+        return 'InvalidArgumentException';
     }
 
     if (amountInput % notesAvailable[notesAvailable.length - 1] !== 0) {
-        throwNoteUnavailableError();
+        return 'NoteUnavailableException';
     }
 
     if (amountInput < notesAvailable[highestNoteIndex]) {
@@ -43,14 +43,6 @@ const getNotes = (amountInput, notesAvailable, highestNoteIndex, notesWithdrew) 
     }
 }
 
-const throwNoteUnavailableError = () => {
-    throw new Error('NoteUnavailableException');
-}
-
-const throwInvalidArgumentError = () => {
-    throw new Error('InvalidArgumentException');
-}
-
 const addNotesWithdrew = (previousNotes, newNotes) => [...previousNotes, ...newNotes];
 
 const createArrayOfNotes = (times, value, notes) => {
@@ -74,13 +66,15 @@ const getInitialParameters = () => {
 module.exports = {
     withdraw: (amountToWithdraw) => {
         const initialParameters = getInitialParameters();
-    
-        return getNotes(
+        const notes = getNotes(
             amountToWithdraw,
             initialParameters.notesAvailable,
             initialParameters.highestNoteIndex,
             initialParameters.notesWithdrew
-        )
-        .map((value) => value.toFixed(2));
+        );
+
+        return typeof notes === 'string'
+            ? notes
+            : notes.map((value) => value.toFixed(2));
     }
 };
