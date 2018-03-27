@@ -7,7 +7,6 @@ const cashMachine = require('./components/cash-machine/cash-machine');
 
 app.listen(port, () => {
     console.log('Server running');
-    console.log(cashMachine.withdraw(220));
 });
 
 app.get('/withdraw/:amount', (req, res) => {
