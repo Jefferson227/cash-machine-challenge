@@ -66,18 +66,10 @@ const createArrayOfNotes = (times, value) => {
     return _createArrayOfNotes(times, value, []);
 }
 
+// Exporting the function that will be available to the user
 module.exports = {
-    withdraw: (amountToWithdraw) => {
-        const initialParameters = getInitialParameters();
-        const notes = getNotes(
-            amountToWithdraw,
-            initialParameters.notesAvailable,
-            initialParameters.highestNoteIndex,
-            initialParameters.notesWithdrew
-        );
-
-        return typeof notes === 'string'
-            ? notes
-            : notes.map((value) => value.toFixed(2));
+    withdraw(amountToWithdraw) {
+        const notesAvailable = [100, 50, 20, 10];
+        return getNotes(amountToWithdraw, notesAvailable);
     }
 };
