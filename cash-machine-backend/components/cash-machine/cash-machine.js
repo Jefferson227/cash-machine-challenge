@@ -50,24 +50,20 @@ const getNotes = (amountInput, notesAvailable) => {
     return _getNotes(amountInput, notes, 0, []);
 }
 
-const addNotesWithdrew = (previousNotes, newNotes) => [...previousNotes, ...newNotes];
+// Creating the array of the notes that will be returned to the user
+// due to the amount passed
+const createArrayOfNotes = (times, value) => {
+    const _createArrayOfNotes = (times, value, notes) => {
+        const newNotes = [...notes, value];
 
-const createArrayOfNotes = (times, value, notes) => {
-	const newNotes = [...notes, value];
+        if (times > 1) {
+            return _createArrayOfNotes(times - 1, value, newNotes);
+        }
 
-	if (times > 1) {
-    	return createArrayOfNotes(times - 1, value, newNotes);
+        return newNotes;
     }
 
-    return newNotes;
-}
-
-const getInitialParameters = () => {
-    return Object.freeze({
-        notesAvailable: [100, 50, 20, 10],
-        highestNoteIndex: 0,
-        notesWithdrew: []
-    });
+    return _createArrayOfNotes(times, value, []);
 }
 
 module.exports = {
