@@ -1,4 +1,8 @@
-const getNotes = (amountInput, notesAvailable, highestNoteIndex, notesWithdrew) => {
+// This function gets the amount desired and the notes available
+// to return the array with the notes according with the amount
+const getNotes = (amountInput, notesAvailable) => {
+    const notes = notesAvailable.sort((a, b) => b - a);
+
     if (amountInput === null) {
         return [];
     }
@@ -11,36 +15,39 @@ const getNotes = (amountInput, notesAvailable, highestNoteIndex, notesWithdrew) 
         return 'InvalidArgumentException';
     }
 
-    if (amountInput % notesAvailable[notesAvailable.length - 1] !== 0) {
+    if (amountInput % notes[notes.length - 1] !== 0) {
         return 'NoteUnavailableException';
     }
 
-    if (amountInput < notesAvailable[highestNoteIndex]) {
-		return getNotes(
-            amountInput,
-            notesAvailable,
-            highestNoteIndex + 1,
-            notesWithdrew
-        );
-    } else {
-    	const remainder = amountInput % notesAvailable[highestNoteIndex];
-        const newNotes = createArrayOfNotes(
-            Math.floor(amountInput / notesAvailable[highestNoteIndex]),
-            notesAvailable[highestNoteIndex],
-            []
-        );
-        
-        if (remainder > 0) {
-        	return getNotes(
-            	remainder,
+    const _getNotes = (amountInput, notesAvailable, highestNoteIndex, notesWithdrew) => {
+        if (amountInput < notesAvailable[highestNoteIndex]) {
+            return _getNotes(
+                amountInput,
                 notesAvailable,
                 highestNoteIndex + 1,
-                addNotesWithdrew(notesWithdrew, newNotes)
+                notesWithdrew
             );
         } else {
-        	return addNotesWithdrew(notesWithdrew, newNotes);
+            const remainder = amountInput % notesAvailable[highestNoteIndex];
+            const newNotes = createArrayOfNotes(
+                Math.floor(amountInput / notesAvailable[highestNoteIndex]),
+                notesAvailable[highestNoteIndex].toFixed(2)
+            );
+
+            if (remainder > 0) {
+                return _getNotes(
+                    remainder,
+                    notesAvailable,
+                    highestNoteIndex + 1,
+                    notesWithdrew.concat(newNotes)
+                );
+            } else {
+                return notesWithdrew.concat(newNotes);
+            }
         }
     }
+
+    return _getNotes(amountInput, notes, 0, []);
 }
 
 const addNotesWithdrew = (previousNotes, newNotes) => [...previousNotes, ...newNotes];
