@@ -5,6 +5,12 @@ const port = process.env.PORT || 3001;
 
 const cashMachine = require('./components/cash-machine/cash-machine');
 
+// Avoiding CORS problem
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    return next();
+});
+
 // Starting the server
 app.listen(port, () => {
     console.log('Server running');
