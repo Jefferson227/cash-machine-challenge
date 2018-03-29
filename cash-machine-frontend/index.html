@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Cash Machine</title>
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <div id="container">
+            <h2>Cash Machine</h2>
+
             <div class="margin-bottom">
-                Notes available: <span v-if="notesAvailable">{{ notesAvailable }}</span>
-                <span v-if="notesAvailableErrorMessage" class="error">{{ notesAvailableErrorMessage }}</span>
+                <small>
+                    Notes available: <span v-if="notesAvailable">{{ notesAvailable }}</span>
+                    <span v-if="notesAvailableErrorMessage" class="error">{{ notesAvailableErrorMessage }}</span>
+                </small>
             </div>
 
             <label>Amount desired:</label>
-            <input type="text" v-model="amount" />
+            <input type="text" class="amount" v-model="amount" />
 
-            <button @click="withdrawAmount()" :disabled="disableWithdrawButton">Withdraw</button>
+            <button @click="withdrawAmount()" :disabled="disableWithdrawButton" class="withdraw">Withdraw</button>
 
             <div v-if="notesErrorMessage" class="margin-top error">{{ notesErrorMessage }}</div>
 
-            <div v-if="notes.length" class="margin-top">
+            <div v-if="notes.length" class="margin-top success">
                 <div>Notes:</div>
-                <div>
-                    <ul class="margin-top">
-                        <li v-for="note in notes">{{ note }}</li>
-                    </ul>
-                </div>
+                <div>{{ notes.join(', ') }}</div>
             </div>
         </div>
 
