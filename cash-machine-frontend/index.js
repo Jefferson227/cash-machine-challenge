@@ -4,38 +4,56 @@ let vm = new Vue({
   data: {
     amount: '',
     notes: [],
-    errorMessage: ''
+    notesErrorMessage: '',
+    notesAvailable: '',
+    notesAvailableErrorMessage: ''
   },
   methods: {
     withdrawAmount: withdrawAmount
   },
   computed: {
-    disableWithdrawButton: disableWithdrawButton
-  }
+    disableWithdrawButton: disableWithdrawButton,
+  },
+  created: getNotesAvailable
 });
+
+// Common constant
+const defaultErrorMessage = 'An error has occurred.';
+
+// Getting the full path to the API's endpoints
+function getEndpointUrl(endpoint) {
+  return `http://localhost:3001${endpoint}`;
+}
 
 // Getting the data from the endpoint
 function withdrawAmount() {
-  axios.get(`http://localhost:3001/withdraw/${this.amount}`)
+  axios.get(getEndpointUrl(`/withdraw/${this.amount}`))
     .then(withdrawAmountSuccess)
     .catch(withdrawAmountError);
+}
+
+// Getting the notes available from the endpoint
+function getNotesAvailable() {
+  axios.get(getEndpointUrl('/get-notes-available'))
+    .then(getNotesAvailableSuccess)
+    .catch(getNotesAvailableError);
 }
 
 // Passing the data from the endpoint to the view
 function withdrawAmountSuccess(res) {
     if (typeof res.data !== 'string') {
       vm.notes = res.data;
-      vm.errorMessage = '';
+      vm.notesErrorMessage = '';
     } else {
       switch(res.data) {
         case 'InvalidArgumentException':
-          vm.errorMessage = 'An invalid amount has been submitted.';
+          vm.notesErrorMessage = 'An invalid amount has been submitted.';
           break;
         case 'NoteUnavailableException':
-          vm.errorMessage = 'There\'s no available notes for this amount.';
+          vm.notesErrorMessage = 'There\'s no available notes for this amount.';
           break;
         default:
-          vm.errorMessage = 'An error has occurred.';
+          vm.notesErrorMessage = defaultErrorMessage;
           break;
       }
 
@@ -45,8 +63,20 @@ function withdrawAmountSuccess(res) {
 
 // Catching the error from the endpoint
 function withdrawAmountError() {
-    vm.errorMessage = 'An error has occurred.';
+    vm.notesErrorMessage = defaultErrorMessage;
     vm.notes = [];
+}
+
+// Returning the notes available to be displayed in the view
+function getNotesAvailableSuccess(res) {
+  vm.notesAvailable = res.data.join(', ');
+  vm.notesAvailableErrorMessage = '';
+}
+
+// Returning the notes available to be displayed in the view
+function getNotesAvailableError() {
+  vm.notesAvailableErrorMessage = defaultErrorMessage;
+  vm.notesAvailable = '';
 }
 
 // Disabling/enabling the withdraw button

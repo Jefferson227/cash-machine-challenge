@@ -2,6 +2,10 @@
   margin-top: 15px;
 }
 
+#container .margin-bottom {
+  margin-bottom: 15px;
+}
+
 #container .error {
   color: red;
 }

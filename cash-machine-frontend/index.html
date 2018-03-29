@@ -6,12 +6,17 @@
     </head>
     <body>
         <div id="container">
+            <div class="margin-bottom">
+                Notes available: <span v-if="notesAvailable">{{ notesAvailable }}</span>
+                <span v-if="notesAvailableErrorMessage" class="error">{{ notesAvailableErrorMessage }}</span>
+            </div>
+
             <label>Amount desired:</label>
             <input type="text" v-model="amount" />
 
             <button @click="withdrawAmount()" :disabled="disableWithdrawButton">Withdraw</button>
 
-            <div v-if="errorMessage" class="margin-top error">{{ errorMessage }}</div>
+            <div v-if="notesErrorMessage" class="margin-top error">{{ notesErrorMessage }}</div>
 
             <div v-if="notes.length" class="margin-top">
                 <div>Notes:</div>
