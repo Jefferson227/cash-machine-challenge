@@ -2,14 +2,29 @@
 <html>
     <head>
         <title>Cash Machine</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
         <div id="container">
-            <label>Insert the amount desired:</label>
-            <input type="number" />
-            <button>Submit</button>
+            <label>Amount desired:</label>
+            <input type="text" v-model="amount" />
+
+            <button @click="withdrawAmount()" :disabled="disableWithdrawButton">Withdraw</button>
+
+            <div v-if="errorMessage" class="margin-top error">{{ errorMessage }}</div>
+
+            <div v-if="notes.length" class="margin-top">
+                <div>Notes:</div>
+                <div>
+                    <ul class="margin-top">
+                        <li v-for="note in notes">{{ note }}</li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
         <script src="https://unpkg.com/vue/dist/vue.min.js"></script>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="index.js"></script>
     </body>
 </html>
