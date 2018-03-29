@@ -1,3 +1,5 @@
+const notesAvailable = require('./cash-machine-notes-available');
+
 // This function gets the amount desired and the notes available
 // to return the array with the notes according with the amount
 const getNotes = (amountInput, notesAvailable) => {
@@ -67,7 +69,6 @@ const createArrayOfNotes = (times, value) => {
 // Exporting the function that will be available to the user
 module.exports = {
     withdraw(amountToWithdraw) {
-        const notesAvailable = [100, 50, 20, 10];
         return getNotes(amountToWithdraw, notesAvailable);
     }
 };

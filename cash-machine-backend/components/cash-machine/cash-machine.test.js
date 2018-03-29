@@ -1,5 +1,11 @@
 const test = require('tape');
 const cashMachine = require('./cash-machine');
+const notesAvailable = require('./cash-machine-notes-available');
+
+test('Check if there are notes available', (t) => {
+    t.assert(notesAvailable.length, 'There are notes available');
+    t.end();
+});
 
 test('Withdraw valid amount', (t) => {
     t.assert(cashMachine.withdraw(250).length, 'Valid amount withdrew');

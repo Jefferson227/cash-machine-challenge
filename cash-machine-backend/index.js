@@ -4,6 +4,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 
 const cashMachine = require('./components/cash-machine/cash-machine');
+const notesAvailable = require('./components/cash-machine/cash-machine-notes-available');
 
 // Avoiding CORS problem
 app.use(function (req, res, next) {
@@ -23,4 +24,14 @@ app.get('/withdraw/:amount', (req, res) => {
         : parseInt(req.params.amount);
 
     res.send(cashMachine.withdraw(amount));
+});
+
+// Getting the notes available
+app.get('/get-notes-available', (req, res) => {
+    res.send(
+        notesAvailable
+            .sort()
+            .reverse()
+            .map((note) => note.toFixed(2))
+    );
 });
