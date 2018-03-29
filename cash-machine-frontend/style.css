@@ -1,3 +1,30 @@
+body {
+  background-color: #f2f2f2;
+}
+
+#container {
+  text-align: center;
+  font-size: 26px;
+  font-family: Helvetica;
+  margin-top: 78px;
+}
+
+#container .amount {
+  font-size: 26px;
+}
+
+#container .withdraw {
+  font-size: 20px;
+  padding: 12px 9px 8px 9px;
+  background-color: rgb(250, 178, 2);
+  border: 0;
+  color: white;
+}
+
+#container .withdraw:disabled {
+  background-color: #c7c7c7;
+}
+
 #container .margin-top {
   margin-top: 15px;
 }
@@ -8,4 +35,8 @@
 
 #container .error {
   color: red;
+}
+
+#container .success {
+  color: green;
 }
