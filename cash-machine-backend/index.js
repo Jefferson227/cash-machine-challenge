@@ -30,8 +30,7 @@ app.get('/withdraw/:amount', (req, res) => {
 app.get('/get-notes-available', (req, res) => {
     res.send(
         notesAvailable
-            .sort()
-            .reverse()
+            .sort((a, b) => b - a)
             .map((note) => note.toFixed(2))
     );
 });
