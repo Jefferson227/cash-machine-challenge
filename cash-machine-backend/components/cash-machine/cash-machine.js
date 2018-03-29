@@ -19,26 +19,24 @@ const getNotes = (amountInput, notesAvailable) => {
         return 'NoteUnavailableException';
     }
 
-    const _getNotes = (amountInput, notesAvailable, highestNoteIndex, notesWithdrew) => {
-        if (amountInput < notesAvailable[highestNoteIndex]) {
+    const _getNotes = (amountInput, notesAvailable, notesWithdrew) => {
+        if (amountInput < notesAvailable[0]) {
             return _getNotes(
                 amountInput,
-                notesAvailable,
-                highestNoteIndex + 1,
+                notesAvailable.slice(1),
                 notesWithdrew
             );
         } else {
-            const remainder = amountInput % notesAvailable[highestNoteIndex];
+            const remainder = amountInput % notesAvailable[0];
             const newNotes = createArrayOfNotes(
-                Math.floor(amountInput / notesAvailable[highestNoteIndex]),
-                notesAvailable[highestNoteIndex].toFixed(2)
+                Math.floor(amountInput / notesAvailable[0]),
+                notesAvailable[0].toFixed(2)
             );
 
             if (remainder > 0) {
                 return _getNotes(
                     remainder,
-                    notesAvailable,
-                    highestNoteIndex + 1,
+                    notesAvailable.slice(1),
                     notesWithdrew.concat(newNotes)
                 );
             } else {
@@ -47,7 +45,7 @@ const getNotes = (amountInput, notesAvailable) => {
         }
     }
 
-    return _getNotes(amountInput, notes, 0, []);
+    return _getNotes(amountInput, notes, []);
 }
 
 // Creating the array of the notes that will be returned to the user
