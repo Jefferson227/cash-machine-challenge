@@ -30,10 +30,10 @@ const getNotes = (amountInput, notesAvailable) => {
             );
         } else {
             const remainder = amountInput % notesAvailable[0];
-            const newNotes = createArrayOfNotes(
-                Math.floor(amountInput / notesAvailable[0]),
-                notesAvailable[0].toFixed(2)
-            );
+            const newNotes = {
+                value: notesAvailable[0].toFixed(2),
+                quantity: Math.floor(amountInput / notesAvailable[0])
+            };
 
             if (remainder > 0) {
                 return _getNotes(
@@ -48,22 +48,6 @@ const getNotes = (amountInput, notesAvailable) => {
     }
 
     return _getNotes(amountInput, notes, []);
-}
-
-// Creating the array of the notes that will be returned to the user
-// due to the amount passed
-const createArrayOfNotes = (times, value) => {
-    const _createArrayOfNotes = (times, value, notes) => {
-        const newNotes = [...notes, value];
-
-        if (times > 1) {
-            return _createArrayOfNotes(times - 1, value, newNotes);
-        }
-
-        return newNotes;
-    }
-
-    return _createArrayOfNotes(times, value, []);
 }
 
 // Exporting the function that will be available to the user
