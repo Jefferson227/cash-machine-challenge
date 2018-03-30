@@ -31,3 +31,8 @@ test('Withdraw passing a null value', (t) => {
     t.assert(!cashMachine.withdraw(null).length, 'Tried to withdraw passing a null value');
     t.end();
 });
+
+test('Withdraw a large amount', (t) => {
+    t.assert(cashMachine.withdraw(10000000).length, 'Withdrew a large amount');
+    t.end();
+});
