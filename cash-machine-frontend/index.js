@@ -39,10 +39,20 @@ function getNotesAvailable() {
     .catch(getNotesAvailableError);
 }
 
+// Transform the array of notes to display on the view
+function transformNotesArray(data) {
+  return [...new Set(data)].map((item) => {
+    return {
+      value: item,
+      quantity: data.filter((itemFilter) => itemFilter === item).length
+    };
+  });
+}
+
 // Passing the data from the endpoint to the view
 function withdrawAmountSuccess(res) {
     if (typeof res.data !== 'string') {
-      vm.notes = res.data;
+      vm.notes = transformNotesArray(res.data);
       vm.notesErrorMessage = '';
     } else {
       switch(res.data) {

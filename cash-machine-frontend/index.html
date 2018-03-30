@@ -23,9 +23,11 @@
 
             <div v-if="notesErrorMessage" class="margin-top error">{{ notesErrorMessage }}</div>
 
-            <div v-if="notes.length" class="margin-top success">
-                <div>Notes:</div>
-                <div>{{ notes.join(', ') }}</div>
+            <div class="notes">
+                <div v-for="note in notes" class="note">
+                    <div class="note-value margin-bottom">${{ note.value }}</div>
+                    <div class="note-quantity">{{ note.quantity }}</div>
+                </div>
             </div>
         </div>
 

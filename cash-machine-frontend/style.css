@@ -11,6 +11,7 @@ body {
 
 #container .amount {
   font-size: 26px;
+  border: 3px solid black;
 }
 
 #container .withdraw {
@@ -26,7 +27,7 @@ body {
 }
 
 #container .margin-top {
-  margin-top: 15px;
+  margin-top: 40px;
 }
 
 #container .margin-bottom {
@@ -39,4 +40,20 @@ body {
 
 #container .success {
   color: green;
+}
+
+#container .notes {
+  display: flex;
+  justify-content: space-around;
+  width: 46%;
+  margin: 0 auto;
+  margin-top: 60px;
+}
+
+#container .note-value {
+  border: 3px green solid;
+  padding: 9px 15px 9px 15px;
+  color: green;
+  box-sizing: border-box;
+  background-color: #e0f7e0;
 }
